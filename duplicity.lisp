@@ -1,0 +1,41 @@
+(defun contain (lst x)
+    (if (equalp lst ())
+        nil
+        (if (equalp (car lst) x)
+            T
+            (contain (cdr lst) x)
+        )
+    )
+)
+ 
+(defun paste (lst in)
+    (if (equalp in ())
+        lst
+        (cons (car in) (paste lst (cdr in)))
+    )
+)
+ 
+(defun serialized (lst)
+    (if (equalp lst ())
+        nil 
+        (if (listp (car lst))
+            (paste (serialized (cdr lst)) (serialized (car lst)))
+            (cons (car lst) (serialized (cdr lst)))
+        )
+    )   
+)
+ 
+(defun duplicity1 (lst contain)
+    (if (equalp lst ())
+        (list)
+        (if (contain contain (car lst))
+            (duplicity1 (cdr lst) contain)
+            (cons (car lst) (duplicity1 (cdr lst) (cons (car lst) contain)))
+        )
+    )
+)
+(defun duplicity2 (lst)
+    (duplicity1 lst ())
+)
+(defun all (lst)
+    (duplicity2 (serialized lst)))

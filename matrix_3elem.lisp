@@ -1,0 +1,16 @@
+(defun matrixS(search)
+	;(car (cdr (cdr search)))
+	(caddr search)
+)
+ 
+(defun matrix3(m)
+	(matrix3Acc m '())
+)
+(defun matrix3Acc(m acc)
+	(if (eq m nil)
+		(reverse acc)
+		(matrix3Acc (cdr m) (cons (matrixS (car m)) acc))
+	)
+)
+
+(print(matrix3 '((1 2 3) (2 3 5) (5 6 7) ) ))
